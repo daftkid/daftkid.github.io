@@ -1,0 +1,14 @@
+title: Oleksandr's Mykytenko Blog
+email: alexandr.mykytenko@gmail.com
+description: >-
+  I'm a Systems Engineer in my "work" life and just a usual tech guy in my "real" life.
+  I just want to express some of my thoughts and ideas here and paste some useful tips and articles.
+baseurl: ""
+url: ""
+github_username:  daftkid
+linkedin_username: oleksandr-mykytenko
+
+markdown: GFM
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
