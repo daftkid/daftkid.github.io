@@ -4,15 +4,19 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+Hello world!
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+My name is `Oleksandr Mykytenko` and I'm a tech guy working as a Systems Engineer and living with technology and automation in my heart.
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+Just created this blog space to share some interesting thoughts, tips and even ideas.
 
+I'm striving to touch all of the possible technologies and I'm not talking only about IT. I'm pretty interested in programming, physics, robotics, modelling, culinary and many other great subjects.
 
-[jekyll-organization]: https://github.com/jekyll
+Welcome all of you guys as my readers to my space.
+
+## Contacts
+
+You can reach me out via next channels:
+
+- email: `alexandr.mykytenko@gmail.com`
+- telegram: `@daft_kiD`
