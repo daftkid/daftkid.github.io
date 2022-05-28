@@ -292,3 +292,14 @@ defaults:
       header:
         overlay_image: /assets/images/header-1.jpg
         overlay_filter: 0.6
+
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      header:
+        overlay_image: /assets/images/header-1.jpg
+        overlay_filter: 0.6

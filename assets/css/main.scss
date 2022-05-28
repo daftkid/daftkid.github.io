@@ -35,8 +35,22 @@ $custom-padding-left: 40px;
 
 .page {
   padding-left: $custom-padding-left;
+  padding-right: 50px;
 }
 
 .page__hero--overlay {
   margin-bottom: 1em;
+}
+
+.page__content {
+  text-align: justify;
+}
+
+.language-plaintext {
+  background-color: #d5e2e8;
+}
+
+::selection {
+  background: #a1e4cb;
+  color: #3d4144;
 }
