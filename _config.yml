@@ -25,7 +25,7 @@ url                      : "https://daftkid.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "daftkid/daftkid.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/assets/images/cloud-logo.jpeg"
+logo                     : "/assets/images/logo.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 breadcrumbs              : true # true, false (default)
 words_per_minute         : 200
@@ -290,5 +290,5 @@ defaults:
       related: true
       show_date: true
       header:
-        overlay_image: /assets/images/header.jpeg
+        overlay_image: /assets/images/header-1.jpg
         overlay_filter: 0.6
