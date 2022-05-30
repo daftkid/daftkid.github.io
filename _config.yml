@@ -52,6 +52,9 @@ author:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://www.instagram.com/daft_kid_/"
+    - label: "Telegram"
+      icon: "fab fa-fw fa-telegram"
+      url: "https://t.me/daft_kiD"
 
 # Site Footer
 footer:
@@ -62,6 +65,9 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://www.instagram.com/daft_kid_/"
+    - label: "Telegram"
+      icon: "fab fa-fw fa-telegram"
+      url: "https://t.me/daft_kiD"
 
 
 # Reading Files
