@@ -35,6 +35,12 @@ search                   : true
 lunr:
   search_within_pages    : true
 
+analytics:
+  provider: "google-gtag"
+  google:
+    tracking_id: "G-VSY49ENZ4Y"
+    anonymize_ip: false # default
+
 # Site Author
 author:
   name             : "Oleksandr Mykytenko"
