@@ -1,5 +1,7 @@
 # main links
 main:
+  - title: "Posts"
+    url: /
   - title: "Open Source"
     url: /opensource/
     description: "My Open Source Contribution"
