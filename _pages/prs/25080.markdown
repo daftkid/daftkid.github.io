@@ -1,0 +1,15 @@
+---
+title:   "aws_dms_endpoint: Secrets manager secret for *aws_dms_endpoint* with *engine_name = redshift*"
+tags:    opensource pr aws_dms_endpoint
+excerpt: ""
+permalink: /opensource/pr-25080/
+---
+
+PR is [here][pr].
+
+## Lessons learned
+
+{% highlight go %}
+{% endhighlight %}
+
+[pr]: https://github.com/hashicorp/terraform-provider-aws/pull/25080

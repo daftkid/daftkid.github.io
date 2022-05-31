@@ -1,0 +1,122 @@
+---
+title:   "aws_cloudfront_response_headers_policy: added *server_timing_headers_config* attribute"
+tags:    opensource pr aws_cloudfront_response_headers_policy aws_cloudfront
+excerpt: ""
+permalink: /opensource/pr-24913/
+---
+
+PR is [ here][pr].
+
+Shipped in Provider version [4.16.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.16.0).
+
+Adding new `server_timing_headers_config` configuration block for `aws_cloudfront_response_headers_policy` resource.
+It will allow us to configure [Server Timing headers][sth] within Cloudfront.
+
+{% highlight hcl %}
+resource "aws_cloudfront_response_headers_policy" "test" {
+  name = "my-policy"
+	
+  server_timing_headers_config {
+    enabled       = true
+    sampling_rate = 20.5 
+  }
+}
+{% endhighlight %}
+
+## Lessons learned
+
+### Update both resource and data_source
+
+If you are going to introduce some new attributes for AWS `resource` it will be a good practice to also add the same attribute for
+`data_source`. This is useful as you will have the attribute populated for your `data_source` when you are trying to just
+read some already existing resources.
+
+Please pay attention, that all the attributes you define for your `data_source` MUST have `Computed: true` defined for them:
+
+{% highlight go %}
+func DataSourceResponseHeadersPolicy() *schema.Resource {
+  return &schema.Resource{
+  Read: dataSourceResponseHeadersPolicyRead,
+  
+  Schema: map[string]*schema.Schema{
+      ...
+      "server_timing_headers_config": {
+          Type:     schema.TypeList,
+          Computed: true,
+          Elem: &schema.Resource{
+              Schema: map[string]*schema.Schema{
+                  "enabled": {
+                      Type:     schema.TypeBool,
+                      // here 
+                      Computed: true,
+                  },
+                  "sampling_rate": {
+                      Type:     schema.TypeFloat,
+                      // and here
+                      Computed: true,
+                  },
+              }},
+          },
+      },
+  }
+}
+{% endhighlight %}
+
+### Always try to follow AWS API (SDK) objects structure as much as possible
+
+Based on AWS API docs and AWS SDK, Server Timing headers configuration object contains two fields:
+
+{% highlight go %}
+type ResponseHeadersPolicyServerTimingHeadersConfig struct {
+    Enabled *bool `type:"boolean" required:"true"`
+    SamplingRate *float64 `type:"double"`
+}
+{% endhighlight %}
+
+From the first look it might appear to you that having `Enabled` attribute is redundant as it does not make any sense to
+set it to false - you can just remove Terraform configuration block for server timing headers config.
+
+My first version of the code had an `if` statement for doing this enablement/disablement:
+{% highlight go %}
+func expandResponseHeadersPolicyServerTimingHeadersConfig(tfMap map[string]interface{}) *cloudfront.ResponseHeadersPolicyServerTimingHeadersConfig {
+    ...
+    apiObject := &cloudfront.ResponseHeadersPolicyServerTimingHeadersConfig{}
+    
+    if v, ok := tfMap["sampling_rate"].(float64); ok && v != 0 {
+        // only set some values if there is "sampling_rate" provided
+        apiObject.Enabled = aws.Bool(v)
+        apiObject.SamplingRate = aws.Float64(v)
+    } else {
+        // disable if block is missing in Terraform code
+        apiObject.Enabled = aws.Bool(false)
+    }
+
+	return apiObject
+}
+{% endhighlight %}
+
+However, after review Terraform Contribution guidelines I have figured out that it's better to follow API object structure
+as much as possible.
+
+That means, to have separate fields for `enabled` and `sampling_rate`:
+
+{% highlight go %}
+func expandResponseHeadersPolicyServerTimingHeadersConfig(tfMap map[string]interface{}) *cloudfront.ResponseHeadersPolicyServerTimingHeadersConfig {
+  ...
+  apiObject := &cloudfront.ResponseHeadersPolicyServerTimingHeadersConfig{}
+  
+  if v, ok := tfMap["enabled"].(bool); ok {
+      apiObject.Enabled = aws.Bool(v)
+  }
+  
+  if v, ok := tfMap["sampling_rate"].(float64); ok && v != 0 {
+      apiObject.SamplingRate = aws.Float64(v)
+  }
+  
+  return apiObject
+}
+{% endhighlight %}
+
+
+[pr]: https://github.com/hashicorp/terraform-provider-aws/pull/24913
+[sth]: https://aws.amazon.com/about-aws/whats-new/2022/03/amazon-cloudfront-server-timing-headers

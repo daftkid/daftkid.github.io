@@ -1,0 +1,121 @@
+---
+title:   "aws_cloudsearch_domain: added *source_fields* attribute for *index_field*"
+tags:    opensource pr aws_cloudsearch_domain
+excerpt: ""
+permalink: /opensource/pr-24915/
+---
+
+PR is [ here][pr].
+
+Shipped in Provider version [4.16.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.16.0).
+
+Adding new auxiliary attribute for AWS Cloudsearch Domain index field - `source_fields`. It will allow us to have some sort
+of inheritance within index fields - the use of the `source_fields` will copy a value from the source filed to the current
+one that has this attribute set.
+
+## Lessons learned
+
+### Always think about data types in your resource `schema`.
+
+At a glance, adding a new attribute with `type = schema.TypeString` will not cause any issues, however, sometimes this
+"simple" field require us to develop some additional logic and checks.
+
+Here is code example:
+
+{% highlight go %}
+"index_field": {
+    Type:     schema.TypeSet,
+    Optional: true,
+    Elem: &schema.Resource{
+        Schema: map[string]*schema.Schema{
+            ...
+            "source_fields": {
+                Type:         schema.TypeString,
+                Optional:     true,
+                ValidateFunc: validation.StringDoesNotMatch(regexp.MustCompile(`score`), "Cannot be set to reserved field score"),
+            },
+            ...
+        },
+    },
+},
+{% endhighlight %}
+
+In this particular case, `index_field` block is defined as `schema.TypeSet`. It means that you are allowed to create as many `index_field`
+blocks in your Terraform configuration file as you wish, however, Terraform will process them in random order, and you do
+not have any guarantees about the order.
+
+And that's the place where errors begin.
+
+As the `source_fields` attribute's name implies, you need to provide a name of the field which will be used as a source for the 
+value. And AWS doesn't let you create your field with `source_field` configured if this source field is missing. Here it comes - 
+you cannot be sure that the source field will exist **at the moment** of creating another one with reference to this
+field because parent attribute's `schema.TypeSet` does not guarantee the order of index field creation.
+
+For example, you have the following Terraform code:
+
+{% highlight hcl %}
+resource "aws_cloudsearch_domain" "test" {
+    name = "my-domain"
+
+    index_field {
+        name          = "int_test"
+        type          = "int"
+        default_value = "2"
+    }
+
+    index_field {
+        name          = "int_test_1"
+        type          = "int"
+        default_value = "4"
+    }
+
+    index_field {
+        name = "int_test_source"
+        type = "int-array"
+        source_fields = "int_test,int_test_1"
+    }
+}
+{% endhighlight %}
+Even despite the fact that an `int_test_source` field is defined at the very end of resource definition, it might be a case
+(and it WILL be) when Terraform will try to create this field in the very beginning and API call will fail. 
+
+Thus, we need to add additional logic to make sure that we first apply all the fields without `source_fields` attribute configured.
+Only after that, we can safely create all other *dependent* fields.
+
+Here is a simple example of how we can achieve this right behaviour. This logic has been proposed and developed by one
+of the repo maintainers. 
+
+{% highlight go %}
+func defineIndexFields(conn *cloudsearch.CloudSearch, domainName string, tfList []interface{}) error {
+    // Define index fields with source fields after those without.
+    for _, defineWhenSourceFieldsConfigured := range []bool{false, true} {
+        for _, tfMapRaw := range tfList {
+            tfMap, ok := tfMapRaw.(map[string]interface{})
+            ...
+            // here we skip all of the fields that have `source_fields` configured
+            // on the first iteration of the main foor loop
+            // to create all "basic" field
+           if sourceFieldsConfigured && !defineWhenSourceFieldsConfigured {
+                continue
+            }
+
+            // here we skip all fields that don't have `source_fields` configured
+            // because we are on the second iteration of the main loop and
+            // are sure that all "basic" fields already exist
+            if !sourceFieldsConfigured && defineWhenSourceFieldsConfigured {
+                continue
+            }
+    
+            input := &cloudsearch.DefineIndexFieldInput{
+                DomainName: aws.String(domainName),
+                IndexField: apiObject,
+            }
+            ...
+        }
+    }
+
+    return nil
+}
+{% endhighlight %}
+
+[pr]: https://github.com/hashicorp/terraform-provider-aws/pull/24915
