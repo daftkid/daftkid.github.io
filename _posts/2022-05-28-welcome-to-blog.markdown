@@ -1,5 +1,5 @@
 ---
-title:  "Who am I"
+title:  "Who I am"
 date:   2022-05-30 18:15:00 +0300
 tags: welcome personal
 excerpt: ""
