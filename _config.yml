@@ -41,6 +41,8 @@ analytics:
     tracking_id: "G-VSY49ENZ4Y"
     anonymize_ip: false # default
 
+google_site_verification: "sK8N7Khht1l3AmtKneSwHKqjT6cSdSRYDS4tyX9b79s"
+
 # Site Author
 author:
   name             : "Oleksandr Mykytenko"
