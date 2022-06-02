@@ -2,10 +2,9 @@
 title:   "r/aws_neptune_cluster: added allow_major_version_upgrade attribute"
 tags:    opensource pr aws_neptune_cluster
 excerpt: ""
-permalink: /opensource/pr-25140/
 ---
 
-PR is [here][pr].
+PR is [here][pr]{: .btn .btn--primary}
 
 
 *AWS API and userguide docs refs:*

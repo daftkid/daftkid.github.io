@@ -1,11 +1,10 @@
 ---
 title:   "aws_cloudfront_response_headers_policy: added *server_timing_headers_config* attribute"
 tags:    opensource pr aws_cloudfront_response_headers_policy aws_cloudfront
-excerpt: ""
-permalink: /opensource/pr-24913/
+excerpt: "aws_cloudfront_response_headers_policy"
 ---
 
-PR is [here][pr].
+PR is [here][pr]{: .btn .btn--success}
 
 Shipped in Provider version [4.16.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.16.0).
 

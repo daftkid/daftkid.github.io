@@ -2,10 +2,9 @@
 title:   "aws_dms_endpoint: Secrets manager secret for *aws_dms_endpoint* with *engine_name = redshift*"
 tags:    opensource pr aws_dms_endpoint
 excerpt: ""
-permalink: /opensource/pr-25080/
 ---
 
-PR is [here][pr].
+PR is [here][pr]{: .btn .btn--success}
 
 Shipped in Provider version [4.17.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.17.0).
 

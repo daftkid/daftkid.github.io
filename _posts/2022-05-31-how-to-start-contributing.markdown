@@ -3,6 +3,9 @@ title:   "How to start contributing to Open Source"
 date:    2022-05-31 18:30:00 +0300
 tags:    personal open-source contribution
 excerpt: ""
+
+header:
+    teaser: "https://www.datocms-assets.com/2885/1620155439-blog-library-product-terraform-aws-logomarks.jpg"
 ---
 
 Hi!
@@ -18,10 +21,8 @@ I remember tons of excitement that overflew me. This tool was really magical - y
 following a particular style, run two or three commands in a terminal - and Voila! - everything is created in AWS. And
 moreover, you can play with these resources, reconfigure them, and so on.
 
-<figure>
-<img src="https://www.datocms-assets.com/2885/1620155439-blog-library-product-terraform-aws-logomarks.jpg">
-<figcaption>Credits to hashicorp.com</figcaption>
-</figure>
+{% include figure image_path="https://www.datocms-assets.com/2885/1620155439-blog-library-product-terraform-aws-logomarks.jpg"
+alt="tf provider for aws" caption="Credits to hashicorp.com" %}
 
 One day I realized that Terraform is not able to create some very new resource for me (don't actually remember what it 
 was) because this resource was released just a couple of days ago within AWS and Terraform did not have any idea of what 
@@ -43,6 +44,7 @@ I came back to this idea each half a year, however, I did not have either too mu
 down and studying, for example, GoLang or Terraform internals.
 
 > **Tip 0**: Start from contribution to the tool that you are using on daily basis, loves and understands.
+{: .notice--success}
 
 In my imagination, Terraform (including AWS Provider) was such a complicated software that I did not know how to start.
 This complexity was killing my motivation. In addition, there were a lot of things not directly related to Terraform,
@@ -54,7 +56,7 @@ in these tools.
 
 > **Tip 1**: All tools are made by people. Each contribution is valuable as it moves the tool forward into a better
 state. Do not feel like an impostor, just contribute!
-
+{: .notice--success}
 
 # Obstacle 1: You have to know programming language
 
@@ -71,11 +73,11 @@ least some basic understanding about what is going on under the hood of your fav
 
 > **Tip 2**: Most popular programming languages for DevOps tools are **JS** or **Go**. They are dramatically different and
 are used for completely different purposes so it's better to know in advance which tools you are going to contribute to.
+{: .notice--success}
 
-<figure>
-<img src="https://cdn-cejjk.nitrocdn.com/RqgODXEbgAKqRQayFqykFbKTSwlhEAKL/assets/static/optimized/rev-e623d2d/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg">
-<figcaption>Credits to hireindianprogrammers.com</figcaption>
-</figure>
+{% include figure image_path="https://cdn-cejjk.nitrocdn.com/RqgODXEbgAKqRQayFqykFbKTSwlhEAKL/assets/static/optimized/rev-e623d2d/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg"
+alt="JS vs GoLang" caption="Credits to hireindianprogrammers.com" %}
+
 
 I have found really useful these online courses related to Go:
 - [Master Go Programming at Udemy](https://www.udemy.com/course/master-go-programming-complete-golang-bootcamp/)
@@ -99,6 +101,7 @@ code and extend resource schema.
 > **Tip 3**: In their majority, almost all the tools are based on deadly simple principles. Don't be scared by the tool's 
 complexity, there is always a way to understand some parts or subsystems of the tool and start from them. For example,
 in Terraform Provider for AWS you can start to investigate code from some very simple resources such as [Macie Member Account Association][macie].
+{: .notice--success}
 
 
 # Obstacle 3: Just reading and "understanding" is not enough
@@ -119,6 +122,7 @@ Here is just a brief list of useful resources for Terraform Provider for AWS:
 
 > **Tip 4**: Many of the repos have issues tagged with labels such as `good_first_issue` (for example, [here][gfi] for Terraform
 Provider for AWS). You can start looking at them first, they should be relatively simple to do.
+{: .notice--success}
 
 ![good first issue](/assets/images/good-first-issue.png)
 
@@ -135,7 +139,7 @@ and so on) and each time it's needed to start almost from the beginning.
 > **Tip 5**: Don't be afraid of doing something wrong. In most cases, it's not possible to do something good (or at least 
 something that compiles) right away. Be sure that other guys from the community will help you and answer most of your
 questions (even dummy ones 😀).
-
+{: .notice--success}
 
 # My contributions
 

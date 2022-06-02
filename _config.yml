@@ -226,3 +226,19 @@ defaults:
       header:
         overlay_image: /assets/images/header-1.jpg
         overlay_filter: 0.6
+  - scope:
+      path: ""
+      type: prs
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comments: true
+      header:
+        overlay_image: /assets/images/header-1.jpg
+        overlay_filter: 0.6
+
+collections:
+  prs:
+    output: true
+    permalink: /:collection/:path/
