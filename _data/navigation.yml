@@ -2,6 +2,8 @@
 main:
   - title: "Posts"
     url: /
+  - title: "Tags"
+    url: /tags/
   - title: "Open Source"
     url: /opensource/
     description: "My Open Source Contribution"
