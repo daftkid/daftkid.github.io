@@ -5,13 +5,18 @@ excerpt: ""
 permalink: /opensource/pr-24915/
 ---
 
-PR is [ here][pr].
+PR is [here][pr].
 
 Shipped in Provider version [4.16.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.16.0).
 
 Adding new auxiliary attribute for AWS Cloudsearch Domain index field - `source_fields`. It will allow us to have some sort
 of inheritance within index fields - the use of the `source_fields` will copy a value from the source filed to the current
 one that has this attribute set.
+
+*AWS API and userguide docs refs:*
+- [API_IndexField](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/API_IndexField.html)
+- [API_TextOptions](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/API_TextOptions.html)
+- [Configuring Index Fields](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuring-index-fields.html)
 
 ## Lessons learned
 

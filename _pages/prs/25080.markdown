@@ -7,9 +7,146 @@ permalink: /opensource/pr-25080/
 
 PR is [here][pr].
 
+Shipped in Provider version [4.17.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.17.0).
+
+Adding an ability for using AWS Secrets Manager secret resource as input for AWS DMS Endpoint with `Redshift` engine.
+
+Please note, that AWS Redshift database can be used only as `target` for AWS DMS endpoint.
+
+It will allow us to not store Redshift DB credentials in `.tf` files but rather read the creds from a secured source.
+
+*AWS API and userguide docs refs:*
+- [DMS-CreateEndpoint-request-RedshiftSettings](https://docs.aws.amazon.com/dms/latest/APIReference/API_CreateEndpoint.html#DMS-CreateEndpoint-request-RedshiftSettings)
+- [API_RedshiftSettings](https://docs.aws.amazon.com/dms/latest/APIReference/API_RedshiftSettings.html)
+- [DMS Target Redshift](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.Redshift.html)
+
 ## Lessons learned
 
+### Look around and try to find some ways to make a code more readable
+
+Don't be thinking only about the place in code that is directly related to your feature or enhancement.
+
+Look around, there might be some places where you can improve code structure and readability. For example, you might
+notice as some code blocks are repeated more than one time (breaking the [DRY][dry] principle). That's a good chance to
+introduce a small function that will do the same but without code duplications. Then just call this function where needed.
+It can significantly reduce the amount of the code.
+
+For example, there was the following code repeated **14 times** within the same file:
+
 {% highlight go %}
+    ...
+    input.Username = aws.String(d.Get("username").(string))
+    input.Password = aws.String(d.Get("password").(string))
+    input.ServerName = aws.String(d.Get("server_name").(string))
+    input.Port = aws.Int64(int64(d.Get("port").(int)))
+    input.DatabaseName = aws.String(d.Get("database_name").(string))
+    ...
 {% endhighlight %}
 
+We have some `input` object and this code block just sets some generic parameters.
+
+New function has been introduced:
+
+{% highlight go %}
+func expandTopLevelConnectionInfoModify(d *schema.ResourceData, input *dms.ModifyEndpointInput) {
+    input.Username = aws.String(d.Get("username").(string))
+    input.Password = aws.String(d.Get("password").(string))
+    input.ServerName = aws.String(d.Get("server_name").(string))
+    input.Port = aws.Int64(int64(d.Get("port").(int)))
+
+	if v, ok := d.GetOk("database_name"); ok {
+		input.DatabaseName = aws.String(v.(string))
+	}
+}
+{% endhighlight %}
+
+The same idea is also true for the Acceptance tests. You might see that some of Terraform code snippets are just copied and 
+pasted for different test cases.
+
+For example:
+{% highlight go %}
+data "aws_kms_alias" "dms" {
+    name = "alias/aws/dms"
+}
+
+data "aws_region" "current" {}
+data "aws_partition" "current" {}
+...
+
+resource "aws_dms_endpoint" "test" {
+    endpoint_id                     = %[1]q
+    endpoint_type                   = "source"
+    engine_name                     = "mariadb"
+    secrets_manager_access_role_arn = aws_iam_role.test.arn
+    secrets_manager_arn             = aws_secretsmanager_secret.test.id
+
+    tags = {
+        Name   = %[1]q
+        Update = "to-update"
+        Remove = "to-remove"
+    }
+}
+{% endhighlight %}
+
+As you can see, all `data` resources might be common for different `aws_dms_endpoint` resources.
+There are only two attributes that change:
+- `aws_dms_endpoint.endoint_id`
+- `aws_dms_endpoint.engine_name` - this will differ for different DB engines (`mariadb`, `redshift`, `mysql` and so on)
+
+You can introduce a new simple function that renders this common Terraform code and then just call this *base* function
+where needed:
+{% highlight go %}
+func testAccEndpointConfig_secretBase(rName string) string {
+    return fmt.Sprintf(`
+data "aws_kms_alias" "dms" {
+    name = "alias/aws/dms"
+}
+
+data "aws_region" "current" {}
+data "aws_partition" "current" {}
+}
+`, rName)
+}
+
+{% endhighlight %}
+
+And then just call it where needed:
+
+{% highlight go %}
+func testAccEndpointConfig_mariaDBSecretID(rName string) string {
+    // As you can see, `testAccEndpointConfig_secretBase` is get called here and its part just will be added to the result
+    // Terraform code for the test by `acctest.ConfigCompose`
+    return acctest.ConfigCompose(testAccEndpointConfig_secretBase(rName), fmt.Sprintf(`
+resource "aws_dms_endpoint" "test" {
+    endpoint_id                     = %[1]q
+    endpoint_type                   = "source"
+    engine_name                     = "mariadb"
+    secrets_manager_access_role_arn = aws_iam_role.test.arn
+    secrets_manager_arn             = aws_secretsmanager_secret.test.id
+
+    tags = {
+        Name   = %[1]q
+        Update = "to-update"
+        Remove = "to-remove"
+    }
+}
+`, rName))
+}
+{% endhighlight %}
+
+
+### Pass `*schema.ResourceData` parameters to functions as a first argument
+
+It's better to pass a parameter of `*schema.ResourceData` type to function on the first place:
+
+{% highlight go %}
+// d *schema.ResourceData is passed on the first place
+func expandTopLevelConnectionInfoModify(d *schema.ResourceData, input *dms.ModifyEndpointInput) {
+    ...
+}
+{% endhighlight %}
+
+It does not make any change to code logic but rather it's some kind of guideline or best practice.
+
 [pr]: https://github.com/hashicorp/terraform-provider-aws/pull/25080
+[dry]: https://en.wikipedia.org/wiki/Don%27t_repeat_yourself

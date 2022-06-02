@@ -1,0 +1,21 @@
+---
+title:   "r/aws_neptune_cluster: added allow_major_version_upgrade attribute"
+tags:    opensource pr aws_neptune_cluster
+excerpt: ""
+permalink: /opensource/pr-25140/
+---
+
+PR is [here][pr].
+
+
+*AWS API and userguide docs refs:*
+- []()
+- []()
+- []()
+
+## Lessons learned
+
+{% highlight go %}
+{% endhighlight %}
+
+[pr]: https://github.com/hashicorp/terraform-provider-aws/pull/25140

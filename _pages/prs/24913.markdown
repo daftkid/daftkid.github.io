@@ -5,7 +5,7 @@ excerpt: ""
 permalink: /opensource/pr-24913/
 ---
 
-PR is [ here][pr].
+PR is [here][pr].
 
 Shipped in Provider version [4.16.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.16.0).
 
@@ -22,6 +22,13 @@ resource "aws_cloudfront_response_headers_policy" "test" {
   }
 }
 {% endhighlight %}
+
+*AWS API and userguide docs refs:*
+- [API_ResponseHeadersPolicyServerTimingHeadersConfig](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ResponseHeadersPolicyServerTimingHeadersConfig.html)
+- [API_CreateResponseHeadersPolicy](https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_CreateResponseHeadersPolicy.html)
+- [Response Headers Policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/understanding-response-headers-policies.html#server-timing-header)
+- [Creating Response Headers Policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-response-headers-policies.html)
+
 
 ## Lessons learned
 
