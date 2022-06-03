@@ -4,7 +4,7 @@ date:   2022-05-30 18:15:00 +0300
 tags: welcome personal
 excerpt: ""
 header:
-    teaser: "/assets/images/welcome-to-blog/winxp.png"
+    teaser: /assets/images/welcome-to-blog/winxp.png
 ---
 
 Hi there 😀👋!
@@ -13,12 +13,12 @@ My name is Oleksandr (sometimes other guys call me Oleks or Alex for short, I'm 
 
 I'm 27 at the time of writing this post, and I'm about 7 years in IT sphere already.
 
-## Disclaimers
+# Disclaimers
 
 I'm not a native English speaker and moreover writer so please forgive me for grammatical and idiomatical mistakes - I do
 my best to improve my English level (that's actually why I decided to run my blog in English). Any comments and critics are appreciated. 
 
-## My first computer
+# My first computer
 I started my way of getting familiar with computers when I was 10 (it was way back in 2005). My parents gifted me a computer on my 10th Birthday
 and I fall in love with it. It was Intel Celeron-based computer with [Windows XP][win-xp] on board. That day my life changed 🙂.
 
@@ -57,7 +57,7 @@ Then I started helping my friends to "fix" some common issues with their compute
 using Daemontools and NoCD to bypass different security checks, copying disks, scanning and printing documents (I've also got 
 EPSON scanner and laser Canon printer from my parents). What a gold time it was!
 
-## How I met ~~your~~ Linux
+# How I met ~~your~~ Linux
 
 When I was 12, it was the first time when I met Linux 😂. One of my father's friends bought a computer and got stuck on
 even using it for some dummy things like watching movies and reading documents. My father asked me to take a look at it and 
@@ -69,7 +69,7 @@ the things like "where is 'My Computer' icon, where is a 'Start' button" and so 
 I said that I cannot help because dunno what to do with this "wrong Windows". Only 3 years after I'll see the same desktop and realize
 that it's his excellency Linux.
 
-## TL;DR My way into IT and CS
+# TL;DR My way into IT and CS
 
 I finished 9 classes at school and applied for college in 2010.
 
@@ -164,7 +164,7 @@ Long story short - I was invited for an internship and that's how I started my c
 
 And I started just from the hard one - Systems engineer.
 
-## What I'm doing now?
+# What I'm doing now?
 
 It's almost a year now since I left EPAM after 6 years. I've managed to climb from a student to Lead DevOps engineer and from a
 silly boy to a mature enough (I believe) guy with extensive tech experience and not-so-bad managerial skills.

@@ -17,9 +17,9 @@ one that has this attribute set.
 - [API_TextOptions](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/API_TextOptions.html)
 - [Configuring Index Fields](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/configuring-index-fields.html)
 
-## Lessons learned
+# Lessons learned
 
-### Always think about data types in your resource `schema`.
+## Always think about data types in your resource `schema`.
 
 At a glance, adding a new attribute with `type = schema.TypeString` will not cause any issues, however, sometimes this
 "simple" field require us to develop some additional logic and checks.

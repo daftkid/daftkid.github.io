@@ -29,9 +29,9 @@ resource "aws_cloudfront_response_headers_policy" "test" {
 - [Creating Response Headers Policies](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/creating-response-headers-policies.html)
 
 
-## Lessons learned
+# Lessons learned
 
-### Update both resource and data_source
+## Update both resource and data_source
 
 If you are going to introduce some new attributes for AWS `resource` it will be a good practice to also add the same attribute for
 `data_source`. This is useful as you will have the attribute populated for your `data_source` when you are trying to just
@@ -68,7 +68,7 @@ func DataSourceResponseHeadersPolicy() *schema.Resource {
 }
 {% endhighlight %}
 
-### Always try to follow AWS API (SDK) objects structure as much as possible
+## Always try to follow AWS API (SDK) objects structure as much as possible
 
 Based on AWS API docs and AWS SDK, Server Timing headers configuration object contains two fields:
 

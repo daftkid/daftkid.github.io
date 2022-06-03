@@ -6,13 +6,15 @@ excerpt: ""
 
 PR is [here][pr]{: .btn .btn--primary}
 
+Shipped in Provider version [4.17.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.17.0).
+
 
 *AWS API and userguide docs refs:*
 - []()
 - []()
 - []()
 
-## Lessons learned
+# Lessons learned
 
 {% highlight go %}
 {% endhighlight %}

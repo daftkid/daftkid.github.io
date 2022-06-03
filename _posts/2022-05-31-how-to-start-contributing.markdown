@@ -5,7 +5,8 @@ tags:    personal open-source contribution
 excerpt: ""
 
 header:
-    teaser: "https://www.datocms-assets.com/2885/1620155439-blog-library-product-terraform-aws-logomarks.jpg"
+    teaser: https://cdn-cejjk.nitrocdn.com/RqgODXEbgAKqRQayFqykFbKTSwlhEAKL/assets/static/optimized/rev-e623d2d/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg
+    overlay_image: "https://cdn-cejjk.nitrocdn.com/RqgODXEbgAKqRQayFqykFbKTSwlhEAKL/assets/static/optimized/rev-e623d2d/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg"
 ---
 
 Hi!
@@ -125,7 +126,6 @@ Provider for AWS). You can start looking at them first, they should be relativel
 {: .notice--success}
 
 ![good first issue](/assets/images/good-first-issue.png)
-
 
 # Newer ending story
 

@@ -4,9 +4,8 @@ date:   2022-06-01 23:00:00 +0300
 tags:   terraform provider
 excerpt: ""
 header:
-    teaser: "https://i.pinimg.com/736x/8c/05/03/8c05039f05f823f61fa2f591819b437b.jpg"
+    teaser: https://i.pinimg.com/736x/8c/05/03/8c05039f05f823f61fa2f591819b437b.jpg
     overlay_image: https://i.pinimg.com/736x/8c/05/03/8c05039f05f823f61fa2f591819b437b.jpg
-    overlay_filter: 0.6
 ---
 
 I decided to write this post as I was unable to find all this information in one place when I was learning Terraform

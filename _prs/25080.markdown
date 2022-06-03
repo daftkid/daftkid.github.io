@@ -19,9 +19,9 @@ It will allow us to not store Redshift DB credentials in `.tf` files but rather 
 - [API_RedshiftSettings](https://docs.aws.amazon.com/dms/latest/APIReference/API_RedshiftSettings.html)
 - [DMS Target Redshift](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.Redshift.html)
 
-## Lessons learned
+# Lessons learned
 
-### Look around and try to find some ways to make a code more readable
+## Look around and try to find some ways to make a code more readable
 
 Don't be thinking only about the place in code that is directly related to your feature or enhancement.
 
@@ -134,7 +134,7 @@ resource "aws_dms_endpoint" "test" {
 {% endhighlight %}
 
 
-### Pass `*schema.ResourceData` parameters to functions as a first argument
+## Pass `*schema.ResourceData` parameters to functions as a first argument
 
 It's better to pass a parameter of `*schema.ResourceData` type to function on the first place:
 
