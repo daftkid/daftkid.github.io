@@ -4,19 +4,35 @@ tags:    opensource pr aws_neptune_cluster
 excerpt: ""
 ---
 
-PR is [here][pr]{: .btn .btn--primary}
+PR is [here][pr]{: .btn .btn--success}
 
 Shipped in Provider version [4.17.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.17.0).
 
+This PR is intended to fix an issue where it's not possible to update AWS Neptune cluster to new major version. AWS API requires us to pass boolean value in order to explicitly specify that we are good to upgrade cluster version.
+
+Currently Terraform resource `aws_neptune_cluster` does not have any attributes for passing this parameter and this PR will fix it - adds new attribute named `allow_major_version_upgrade`.
 
 *AWS API and userguide docs refs:*
-- []()
-- []()
-- []()
+- [ModifyDBCluster](https://docs.aws.amazon.com/neptune/latest/userguide/api-clusters.html#ModifyDBCluster)
 
 # Lessons learned
 
+There is `ImportStateVerifyIgnore` parameter within an Acceptance Test which allow you to specify a list of attributes that cannot be obtained back from the resource after its creation or modification as these attributes are not stored in AWS resource and are used for Terraform resource internal logic or used as flags for AWS API request bodies.
+
+That's exactly our case: you need to pass `allow_major_version_upgrade` flag within Neptune `Modify` request body and this value cannot be read back from AWS as it's just a one-time value.
+
+In order to let Acceptance Test know that some parameters cannot be read back from AWS (and therefore cannot be imported) we need to list all such parameters within an `ImportStateVerifyIgnore` attribute within Acceptance Test Step.
+
+Please see an example below:
 {% highlight go %}
+ImportStateVerifyIgnore: []string{
+	// here you should list all of the resource attributes that cannot be read back from AWS after making a request
+	"apply_immediately",
+	"cluster_identifier_prefix",
+	"final_snapshot_identifier",
+	"skip_final_snapshot",
+	"allow_major_version_upgrade",
+},
 {% endhighlight %}
 
 [pr]: https://github.com/hashicorp/terraform-provider-aws/pull/25140
