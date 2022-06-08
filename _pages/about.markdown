@@ -25,4 +25,4 @@ and just keep all my *notes* in one place.
 
 In case you need to contact me, please use links below my Avatar image on the left side.
 
-[opensrc]: /opensource/
+[opensrc]: /prs/

@@ -1,6 +1,6 @@
 ---
 title:  "Terraform Provider: How it works (Part 2)"
-date:   2022-06-03 12:00:00 +0300
+date:   2022-06-08 12:00:00 +0300
 tags:   terraform provider
 excerpt: ""
 header:
@@ -10,16 +10,16 @@ header:
 The second part of the story about Terraform Provider internals. This part will be more focused on different Provider's
 mechanisms and objects implementation in Go.
 
-## Generic Provider structure
-Terraform has created [terraform-provider-hashicups](https://github.com/hashicorp/terraform-provider-hashicups) repo where
-some example Provider is defined. There is a minimal codebase required for having working Provider.
+# Generic Provider structure
 
-Below I want to run through the Terraform Provider for AWS source files and explain main parts required for Provider to 
-work.
+Terraform has created [terraform-provider-hashicups](https://github.com/hashicorp/terraform-provider-hashicups) repo where
+some example Provider is defined. There is a minimal codebase required for having a working Provider.
+
+Below I want to run through the Terraform Providers' (for both AWS and Hashicups) source files and explain the main parts required for the Provider to work.
 
 Let's go through the files in the repo and try to understand what is going on here.
 
-Entry point is defined within `main.go` file:
+The Provider's entry point is defined within a `main.go` file:
 {% highlight go %}
 func main() {
     ...
@@ -33,7 +33,11 @@ func main() {
 }
 {% endhighlight %}
 
-In general, Provider should be defined in the following way:
+The `provider` package might have another name depending on your provider name (and therefore package name). Usually, the provider package is a separate directory within the whole Provider's repo.
+
+`provider.Provider` is a name of a function within the `provider` package and it MUST return a pointer to `schema.Provider` object in order to conform to Terraform protocol.
+
+In general, a Provider should be defined in the following way:
 {% highlight go %}
 func Provider() *schema.Provider {
 	return &schema.Provider{
@@ -72,7 +76,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 	username := d.Get("username").(string)
 
 	// and create client for accessing Cloud or Service provider
-	c, err := cloud.NewClient(username)
+	c, err := myclient.NewClient(username)
 
 	// if there is an error during client creation, it's needed to populate `diag` object and return it back
 	if err != nil {
@@ -94,25 +98,23 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 That means, we can define our provider in Terraform code in the following way:
 {% highlight hcl %}
 provider "myprovider" {
-	username = "daftkid"
+  username = "daftkid"
 }
 {% endhighlight %}
 
-As a resource, you can use the following in your Terraform code:
-{% highlight hcl %}
-resource "myprovider_resource_name" "test" {
-	name = "my-test-resource"
-}
+In addition, you SHOULD specify all resources and datasources that are supported by your provider. From the code above, we can make an assumption that using this provider we'll be able to manage the next resources:
+- myprovider_resource_name
+- myprovider_data_source_name
 
-{% endhighlight %}
-
-For example, let's take a look on AWS Provider `internal/provider/provider.go` file where `Provider` object is defined.
+For example, let's take a look at AWS Provider `internal/provider/provider.go` file where `Provider` object is defined.
 
 {% highlight go %}
 // Provider returns a *schema.Provider.
 func Provider() *schema.Provider {
 	provider := &schema.Provider{
 		Schema: map[string]*schema.Schema{
+			// here all provider's attributes are defined and you can use them within 
+			// provider "aws" {} section in your Terraform code
 			"access_key": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -170,28 +172,27 @@ func Provider() *schema.Provider {
 {% endhighlight %}
 
 So, you need to define the following values:
-- define Provider Schema that describes all attributes that can be used by provider itself for initialization and configuration;
-you will then be able to pass these attributes in `provider` block of your Terraform code
+- define Provider Schema that describes all attributes that can be used by provider itself for initialization and configuration
 - list all data sources that will be available within your provider
 - list all resources that will be available within your provider
 
-Both data sources and resources must be defined as a map of strings mapped to the functions that return resource schemas.
+Both data sources and resources MUST be defined as a map of strings mapped to the functions that return resource schemas.
 
-## Resource and Data Source generic structure
+# Resource and Data Source generic structure
 
-So, for now we need to define all data sources and resources which are available in our Provider. In our previous example,
-we had the following resources list within provider definition:
+At this step, we need to define all data sources and resources which are available in our Provider. In our previous example,
+we had the following resources list within the provider definition:
 {% highlight go %}
 ...
 ResourcesMap: map[string]*schema.Resource{
 	// all resources that are available within the provider are defined here
-	"resource_name": resourceFunction(),
+	"myprovider_resource_name": resourceFunction(),
 },
 {% endhighlight %}
 
-We need to define `resourceFunction()` somewhere within the package in order to make it work.
+We need to define `resourceFunction()` somewhere within the package in order to make it work. And make sure that this function returns a pointer to `schema.Resource`. Very similar to the Provider mechanism, right? 😀
 
-Let's take a look on some basic resource function structure:
+Let's take a look at some basic resource function structure:
 {% highlight go %}
 func resourceFunction() *schema.Resource {
 	return &schema.Resource{
@@ -227,13 +228,20 @@ func resourceFunction() *schema.Resource {
 }
 {% endhighlight %}
 
-Then we need to implement CRUD functions specified for `CreateContext`, `ReadContext`, `UpdateContext` and `DeleteContext`.
+# CRUD functions
+
+We need to implement CRUD functions specified for `CreateContext`, `ReadContext`, `UpdateContext` and `DeleteContext`.
 In most cases, they are following the same logic:
 - get values from schema
-- convert them into data structure which is required by Client lib
-- pass the data structure into client call (create, modify or delete)
+- convert them into a data structure which is required by Client lib
+- pass the data structure into the client call (create, modify or delete)
 - process client response and errors if any
 - convert values from client response object into schema values
+
+CRUD functions MUST accept the following parameters in order to be compliant with Terraform protocols:
+- `ctx context.Context` - Terraform's context, you can ignore this parameter as it's not directly related to resource management;
+- `d *schema.ResourceData` - ResourceData object that holds all of the resource attributes defined in `.tf` files;
+- `m interface{}` - object, that is returned by `providerConfigure` function from the Provider definition.
 
 Here is an example of `Create` function:
 {% highlight go %}
@@ -299,7 +307,7 @@ func resourceRead(ctx context.Context, d *schema.ResourceData, m interface{}) di
 }
 {% endhighlight %}
 
-Here is a `Delete` function:
+Here is an `Update` function:
 {% highlight go %}
 func resourceUpdate(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	// getting the client, the same as for Create function	
@@ -353,8 +361,61 @@ func resourceDelete(ctx context.Context, d *schema.ResourceData, m interface{}) 
 }
 {% endhighlight %}
 
+Please note that Terraform will not use our plugin and throw an error until we define at least `Create`, `Read` and `Delete` functions as they are basic ones for the resource management lifecycle.
+
+# How to do initial tests of your provider or resource
+
+Once we defined CRUD functions for our resource, we can start testing our provider and resource itself.
+
+Firstly, you need to `build` your provider into an executable binary. For doing so, please run `go build .` in the root directory of your provider repository.
+
+Go then will try to compile and build everything you've already coded. The process will fail if there are any errors in your code (syntactical, types mismatch, and so on). Please fix all errors and rerun the command.
+
+Then please run `go install`. It will copy your provider's binary into the GOBIN directory.
+
+To start using your Provider locally it's needed to say Terraform where to look for your Provider's binary. As I said in the previous [part of the story][first-part], Terraform will look for providers locally in your workdir first (a directory with your `.tf` files), then it will check `~/.terraform.d` directory and then will try to find a Provider within Terraform Registry. That's obvious, that your Provider binary is not in either place as it's stored in `GOBIN` directory.
+
+> `GOBIN` by default is set to `${GOPATH}/bin`, you can get these values by running `go env | grep 'GOPATH\|GOBIN'`.
+{: .notice--success}
+
+Well, we've found where our Terraform Provider binary is located. How to say Terraform look for our Provider within this location?
+
+We can do it via creating a so-called `terraform.rc` file and specify where to locate custom and "in-development" providers.
+
+Please create a `.terraformrc` [file][tfrc] within your `$HOME` directory and populate it with the following lines:
+
+{% highlight json %}
+provider_installation {
+  dev_overrides {
+    "myprovider" = "<path to your GOBIN directory>"
+  }
+  direct {}
+}
+{% endhighlight %}
+
+The only thing to do left - is to create `.tf` file with your resource/provider definitions and try to run `terraform plan`.
+
+Test `.tf` file for `myprovider` might look like the following:
+
+{% highlight hcl %}
+provider "myprovider" {
+  username = "daftkid"
+}
+
+resource "myprovider_resource_name" "test" {
+  name = "my-test-resource"
+}
+{% endhighlight %}
+
+At the moment, you are ready to play with it and develop your own basic provider. The Provider's complexity is just limited by your goals and Go Lang skills 🙂.
+
+You can get more details in [Terraform Official docs for Provider development][tf-dev-docs].
+
 [tf]:https://www.terraform.io/
 [how-tf-works]:https://www.terraform.io/plugin/how-terraform-works
 [tf-reg]:https://registry.terraform.io/
 [rpc]:https://en.wikipedia.org/wiki/Remote_procedure_call
 [tf-protocol]:https://www.terraform.io/plugin/how-terraform-works#terraform-plugin-protocol
+[tfrc]:https://www.terraform.io/cli/config/config-file
+[first-part]:/terraform-provider-how-does-it-work/
+[tf-dev-docs]:https://www.terraform.io/plugin
