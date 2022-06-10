@@ -5,8 +5,8 @@ tags:    personal open-source contribution
 excerpt: ""
 
 header:
-    teaser: https://cdn-cejjk.nitrocdn.com/RqgODXEbgAKqRQayFqykFbKTSwlhEAKL/assets/static/optimized/rev-e623d2d/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg
-    overlay_image: "https://cdn-cejjk.nitrocdn.com/RqgODXEbgAKqRQayFqykFbKTSwlhEAKL/assets/static/optimized/rev-e623d2d/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg"
+    teaser: https://hireindianprogrammers.com/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg 
+    overlay_image: https://hireindianprogrammers.com/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg 
 ---
 
 Hi!
@@ -76,7 +76,7 @@ least some basic understanding about what is going on under the hood of your fav
 are used for completely different purposes so it's better to know in advance which tools you are going to contribute to.
 {: .notice--success}
 
-{% include figure image_path="https://cdn-cejjk.nitrocdn.com/RqgODXEbgAKqRQayFqykFbKTSwlhEAKL/assets/static/optimized/rev-e623d2d/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg"
+{% include figure image_path="https://hireindianprogrammers.com/wp-content/uploads/2022/02/GOLang-Vs-NodeJS-Which-is-Best-For-Backend-Development.jpg"
 alt="JS vs GoLang" caption="Credits to hireindianprogrammers.com" %}
 
 
@@ -156,4 +156,4 @@ working on it. But hopefully in the future I'll play with some other stuff.
 [checklist]: https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/contribution-checklists.md
 [acc-test]: https://github.com/hashicorp/terraform-provider-aws/blob/main/docs/contributing/running-and-writing-acceptance-tests.md
 
-[opensource]: /opensource/
+[opensource]: /prs/
