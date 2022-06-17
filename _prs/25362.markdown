@@ -1,0 +1,17 @@
+---
+title:   "r/aws_fms_policy: Added policy_option config block for FMS policy"
+tags:    opensource pr aws_fms_policy
+excerpt: ""
+---
+
+PR is [here][pr]{: .btn .btn--primary}
+
+Shipped in Provider version []().
+
+*AWS API and userguide docs refs:*
+- [API_PutPolicy](https://docs.aws.amazon.com/fms/2018-01-01/APIReference/API_PutPolicy.html)
+- [API_SecurityServicePolicyData](https://docs.aws.amazon.com/fms/2018-01-01/APIReference/API_SecurityServicePolicyData.html)
+
+# Lessons learned
+
+[pr]:https://github.com/hashicorp/terraform-provider-aws/pull/25362

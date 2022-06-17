@@ -1,0 +1,20 @@
+---
+title:   "r/aws_emr_cluster: Add sc1 as EBS allowed volume type for AWS EMR cluster resource"
+tags:    opensource pr aws_emr_cluster 
+excerpt: ""
+---
+
+PR is [here][pr]{: .btn .btn--primary}
+
+Shipped in Provider version []().
+
+Just a small adjustment to allow the usage of `sc1` EBS volume type for EMR cluster instances.
+
+*AWS API and userguide docs refs:*
+- [AWS Blog post](https://aws.amazon.com/about-aws/whats-new/2016/04/ebs-introduces-two-new-low-cost-high-throughput-hdd-volume-types/)
+
+# Lessons learned
+
+
+
+[pr]:https://github.com/hashicorp/terraform-provider-aws/pull/25255
