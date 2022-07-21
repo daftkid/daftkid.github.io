@@ -1,12 +1,12 @@
 ---
 title:   "r/aws_emr_cluster: Add sc1 as EBS allowed volume type for AWS EMR cluster resource"
 tags:    opensource pr aws_emr_cluster 
-excerpt: ""
+excerpt: "aws_emr_cluster"
 ---
 
-PR is [here][pr]{: .btn .btn--primary}
+PR is [here][pr]{: .btn .btn--success}
 
-Shipped in Provider version []().
+Shipped in Provider version [4.22.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.22.0).
 
 Just a small adjustment to allow the usage of `sc1` EBS volume type for EMR cluster instances.
 
@@ -15,6 +15,16 @@ Just a small adjustment to allow the usage of `sc1` EBS volume type for EMR clus
 
 # Lessons learned
 
+## Some issues are really easy to solve
 
+As you can see, this PR is pretty small and simple and it just contains one line addition to `validEBSVolumeType()` function. And that's it! `sc1` type is already added into AWS SDK for GoLang so you just need to allow this value in Terraform resource own functions. As simple as is! 😀
+
+## Acceptance tests must be executed!
+
+Acceptance tests must be always executed before going into a release.
+
+In this PR I have updated test definition to use additional EBS volume of type `sc1` for spinning up EMR cluster and I set volume size to `10Gb`. During the tests it turned that minimal volume size of type `sc1` is `125Gb`. So it was changed to minimal value.
+
+That's how you can learn not really obvious things about some AWS resources.
 
 [pr]:https://github.com/hashicorp/terraform-provider-aws/pull/25255
