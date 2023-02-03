@@ -7,7 +7,7 @@ author_profile: true
 
 Welcome to my personal Tech Blog!
 
-My name is **Oleksandr Mykytenko**, I'm 27 and I live in Ukraine so far.
+My name is **Oleksandr Mykytenko**, I'm slightly below 30 and I live in Ukraine so far.
 
 I'm really passionate about practicing different technical things such as Cloud Architecture, Systems and Software Engineering.
 
