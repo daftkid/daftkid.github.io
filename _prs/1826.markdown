@@ -1,0 +1,17 @@
+---
+title:   "fixed typo in title for awslambda_function_not_publicly_accessible_check"
+tags:    opensource pr prowler metadata
+excerpt: "prowler lambda check typo fix"
+---
+
+PR is [here][pr]{: .btn .btn--success}
+
+Shipped in Prowler version [3.1.3](https://github.com/prowler-cloud/prowler/releases/tag/3.1.3).
+
+Just a tiny cosmetic typo fix for AWS Lambda related check. I have noticed this typo after importing some findings into AWS SecurityHub.
+
+# Lessons learned
+
+Not too many actually, just started some small contribution into the Prowler. Tried to find out what are the contribution rules and guidelines for the repo.
+
+[pr]: https://github.com/prowler-cloud/prowler/pull/1826

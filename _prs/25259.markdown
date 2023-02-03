@@ -1,12 +1,12 @@
 ---
 title:   "r/aws_lambda_function: Added Lambda function name validation"
-tags:    opensource pr aaws_lambda_function 
-excerpt: ""
+tags:    opensource pr aws_lambda_function
+excerpt: "aws_lambda_function "
 ---
 
-PR is [here][pr]{: .btn .btn--primary}
+PR is [here][pr]{: .btn .btn--success}
 
-Shipped in Provider version []().
+Shipped in Provider version [4.29.0](https://github.com/hashicorp/terraform-provider-aws/releases/tag/v4.29.0).
 
 This PR introduces Validation logic for AWS Lambda Function name.
 
@@ -15,5 +15,7 @@ This PR introduces Validation logic for AWS Lambda Function name.
 - [API_CreateFunction - Name](https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-FunctionName)
 
 # Lessons learned
+
+Sometimes you need to wait for a long time until your PR is merged :D .
 
 [pr]:https://github.com/hashicorp/terraform-provider-aws/pull/25259
