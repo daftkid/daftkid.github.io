@@ -2,6 +2,7 @@
 title:   "fixed typo in title for awslambda_function_not_publicly_accessible_check"
 tags:    opensource pr prowler metadata
 excerpt: "prowler lambda check typo fix"
+toc: true
 ---
 
 PR is [here][pr]{: .btn .btn--success}

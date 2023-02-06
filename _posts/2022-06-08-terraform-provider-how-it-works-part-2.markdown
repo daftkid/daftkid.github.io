@@ -6,6 +6,7 @@ excerpt: ""
 header:
     teaser: "https://i.pinimg.com/736x/8c/05/03/8c05039f05f823f61fa2f591819b437b.jpg"
     overlay_image: https://i.pinimg.com/736x/8c/05/03/8c05039f05f823f61fa2f591819b437b.jpg
+toc: true
 ---
 
 The second part of the story about Terraform Provider internals. This part will be more focused on different Provider's

@@ -2,6 +2,7 @@
 title:   "r/aws_emr_cluster: Add sc1 as EBS allowed volume type for AWS EMR cluster resource"
 tags:    opensource pr aws_emr_cluster 
 excerpt: "aws_emr_cluster"
+toc: true
 ---
 
 PR is [here][pr]{: .btn .btn--success}

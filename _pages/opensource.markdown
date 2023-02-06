@@ -2,6 +2,7 @@
 title:   "My Contribution to Open Source"
 tags:    opensource
 excerpt: ""
+toc: true
 permalink: /prs/
 ---
 

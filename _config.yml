@@ -152,6 +152,7 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
+  - jekyll-toc
 
 # mimic GitHub Pages with --safe
 whitelist:
@@ -242,3 +243,11 @@ collections:
   prs:
     output: true
     permalink: /:collection/:path/
+
+# TOC Settings
+toc:
+ min_level: 1
+ max_level: 3
+ list_class: toc
+ list_class: toc__list
+ sublist_class: toc__sublist

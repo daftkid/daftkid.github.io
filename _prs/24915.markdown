@@ -2,6 +2,7 @@
 title:   "aws_cloudsearch_domain: added *source_fields* attribute for *index_field*"
 tags:    opensource pr aws_cloudsearch_domain
 excerpt: ""
+toc: true
 ---
 
 PR is [here][pr]{: .btn .btn--success}

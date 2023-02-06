@@ -2,6 +2,7 @@
 title:   "r/aws_neptune_cluster: added allow_major_version_upgrade attribute"
 tags:    opensource pr aws_neptune_cluster
 excerpt: ""
+toc: true
 ---
 
 PR is [here][pr]{: .btn .btn--success}

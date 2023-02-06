@@ -2,6 +2,7 @@
 title:   "r/aws_fms_policy: Added policy_option config block for FMS policy"
 tags:    opensource pr aws_fms_policy
 excerpt: ""
+toc: true
 ---
 
 PR is [here][pr]{: .btn .btn--primary}

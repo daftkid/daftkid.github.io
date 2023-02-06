@@ -5,6 +5,7 @@ tags: welcome personal
 excerpt: ""
 header:
     teaser: /assets/images/welcome-to-blog/winxp.png
+toc: true
 ---
 
 Hi there 😀👋!
