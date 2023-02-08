@@ -1,0 +1,27 @@
+---
+title:   "fix(checks): added validation for non-existing VPC endpoint policy"
+tags:    opensource pr prowler vpc_endpoint_policy
+excerpt: "prowler vpc_endpoint_policy check fix"
+toc: true
+---
+
+PR is [here][pr]{: .btn .btn--success}
+
+Shipped in Prowler version [3.1.5](https://github.com/prowler-cloud/prowler/releases/tag/3.1.5).
+
+It turned out that VPC endpoint reosource of `GatewayLoadBalancer` does not have `policy_document` attached to it thus this field value is set to `None`.
+
+`vpc_endpoint_connections_trust_boundaries` check was not able to parse field of `None` that's why it just failed with the error:
+
+{% highlight bash %}
+2023-02-07 18:36:25,881 [File: check.py:307] 	[Module: check]	 ERROR: vpc_endpoint_connections_trust_boundaries -- TypeError[13]: 'NoneType' object is not subscriptable
+{% endhighlight %}
+
+*AWS CLI and userguide docs refs:*
+- [create-vpc-endpoint](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-vpc-endpoint.html#examples)
+
+# Lessons learned
+
+Not too many, just another simple Python code fix.
+
+[pr]: https://github.com/prowler-cloud/prowler/pull/1859

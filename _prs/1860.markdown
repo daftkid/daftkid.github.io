@@ -1,0 +1,33 @@
+---
+title:   "fix(elbv2): handle service for GWLB resources"
+tags:    opensource pr prowler elbv2 ListenerNotFound
+excerpt: "prowler elbv2 fix logic for GWLB"
+toc: true
+---
+
+PR is [here][pr]{: .btn .btn--success}
+
+Shipped in Prowler version [3.1.5](https://github.com/prowler-cloud/prowler/releases/tag/3.1.5).
+
+I have noticed that Prowler returns the error while reading Load Balancers in the account:
+
+{% highlight bash %}
+2023-02-07 22:28:12,378 [File: elbv2_service.py:62]     [Module: elbv2_service]  ERROR: cn-northwest-1 -- KeyError[53]: 'DNSName'
+{% endhighlight %}
+
+It turned out that Gateway Load Balancer does not have such fields as `DNSName` and `Scheme` and Prowler was catching a `KeyError` exception while trying to build a LB object.
+
+Made these fields optional and added some conditions - and voila, it works now.
+
+# Lessons learned
+
+## Check underlying SDK
+
+Despite the fact that LBs are fixed now and Prowler is able to process GWLB correctly, there is still an issue with reading a list of LB Listener's rules for GWLB listener.
+
+The interesting part here is that it's totaly fine to get/describe the Listener by its ARN, however AWS API (and boto3 consequently) returns an `ListenerNotFound` error while trying to get/describe Listener rules by Listener's ARN.
+
+For me it seems like a limitation of AWS API in regards to GWLB Listener rules but it should be somehow processed in `boto3`. I have raised an [issue][boto3_issue] for boto3 team about that.
+
+[pr]: https://github.com/prowler-cloud/prowler/pull/1860
+[boto3_issue]: https://github.com/boto/boto3/issues/3591

@@ -30,6 +30,8 @@ This provider is maintained internally by the HashiCorp AWS Provider team.
 `Prowler` is an Open Source security tool to perform AWS and Azure security best practices assessments, audits, incident response, continuous monitoring, hardening and forensics readiness.
 
 - ✅ [fix(metadata) fixed typo in title for awslambda_function_not_publicly_accessible_check](/prs/1826)
+- ✅ [fix(checks): added validation for non-existing VPC endpoint policy](/prs/1859)
+- ✅ [fix(elbv2): handle service for GWLB resources](/prs/1860)
 
 
 [prowler]: https://github.com/prowler-cloud/prowler
