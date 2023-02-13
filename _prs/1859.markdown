@@ -7,7 +7,7 @@ toc: true
 
 PR is [here][pr]{: .btn .btn--success}
 
-Shipped in Prowler version [3.1.5](https://github.com/prowler-cloud/prowler/releases/tag/3.1.5).
+Shipped in Prowler version [3.2.0](https://github.com/prowler-cloud/prowler/releases/tag/3.2.0).
 
 It turned out that VPC endpoint reosource of `GatewayLoadBalancer` does not have `policy_document` attached to it thus this field value is set to `None`.
 

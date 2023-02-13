@@ -7,7 +7,7 @@ toc: true
 
 PR is [here][pr]{: .btn .btn--success}
 
-Shipped in Prowler version [3.1.5](https://github.com/prowler-cloud/prowler/releases/tag/3.1.5).
+Shipped in Prowler version [3.2.0](https://github.com/prowler-cloud/prowler/releases/tag/3.2.0).
 
 I have noticed that Prowler returns the error while reading Load Balancers in the account:
 
